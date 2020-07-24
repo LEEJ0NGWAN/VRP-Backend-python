@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, request, jsonify
 from serialize import serialize
+from error_handler import Error, register_handler
 import setting
 import boto3
 
@@ -15,15 +16,22 @@ bucket = s3.Bucket(setting.img_bucket_name)
 # for file in bucket.objects.all():
 #     print(file.key)
 
-app = Blueprint('server', __name__, url_prefix='/')
+app = Blueprint('s3_api', __name__)
+register_handler(app)
 
 @app.route('/ping/', methods=['GET'])
 def ping():
-    return Response('OK', mimetype='text/plain')
+    return Response('testsetsetset', mimetype='text/plain')
 
+
+# TODO: s3 에러처리 하고 이미지 가져오기
 @app.route('/matching/', methods=['POST'])
 def featureMatching():
-    value = request.get_json(silent=True)
+    data = request.get_json(silent=True)
 
-    return jsonify(serialize(value))
+    if 'sceneFileLocation' not in data\
+    or 'evidenceFileLocations' not in data:
+        raise Error(status_code=400)
+
+    return jsonify(serialize(data))
 
