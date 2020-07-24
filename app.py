@@ -1,11 +1,13 @@
+import setting
 from flask import Flask
 import boto3
 
-
 app = Flask(__name__)
-s3 = boto3.resource('s3')
+s3 = boto3.resource('s3',
+    aws_access_key_id=setting.aws_access_key_id,
+    aws_secret_access_key=setting.aws_secret_access_key)
 
-my_bucket = s3.Bucket('vrp-s3')
+my_bucket = s3.Bucket(setting.img_bucket_name)
 
 for file in my_bucket.objects.all():
     print(file.key)
