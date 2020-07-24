@@ -10,11 +10,11 @@ s3 = boto3.resource('s3',
 my_bucket = s3.Bucket(setting.img_bucket_name)
 
 for file in my_bucket.objects.all():
-    print(file.key)
+   print(file.key)
 
 @app.route("/")
 def hello():
-    return body
+    return "hello!"
 
 
 
@@ -37,8 +37,24 @@ IAM 권한(=s3 접근권한)을 등록하면 타인의 s3 버켓도 내 것으�
 내 버켓에 vrp-s3는 없지만 인식이 된다!
 s3=boto3.client('s3')
 
+Error1
+Could not locate a Flask application. You did not provide the "FLASK_APP" environment variable, and a "wsgi.py" or "app.py" module was not found in the current directory.
 
- Could not locate a Flask application. You did not provide the "FLASK_APP" environment variable, and a "wsgi.py" or "app.py" module was not found in the current directory.
+
+Error2
+error: Your local changes to the following files would be overwritten by merge:
+        app.py
+        
+        
+git stash - 내가 여태까지 진행한 변경사항을 "임시"로 저장(=은닉 시켜놓는 것)
+          - 로컬 기준으로 최신 브랜치에서 변경된 사항(git status 시 modified 되있는것)
+          - 버전 관리도 가능하지만, 그런 복잡한 것은 아직 지양
+git stash apply - stash 해놓은 변경사항들을 다시 반영(pull한 이후에 사용 해보기)
+
+.gitignore는 origin repository에 올라간 파일에는 효과가 없다.
+이유는 없다. 그냥 그렇다.
+gitignore가 통하지 않는 이런 파일들은 올리고 싶지 않은데 어떻게 하는게 좋을까?
+git update-index --assume-unchanged "파일 이름" : 해당파일의 변화를 git에서 감지하지 않는다고 명시.
 
 """
 
