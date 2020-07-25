@@ -3,9 +3,18 @@ from PIL import Image
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import subprocess
 
-for cnt in range(0,64):
-    dir_file=str.format('./feature/panoramainput/screen_713x401_{0}.png',cnt)
+popen=subprocess.Popen("extract_panorama_partial.exe")
+output = popen.wait()
+
+print(output)
+
+
+for cnt in range(0 , 64):
+    row = cnt/8
+    col = cnt%8
+    dir_file=str.format('./extract_panorama_partial_Data/screenShots/screen_{0}_{1}.png',row,col)
     img1 = cv2.imread(dir_file,0) #big
     img2 = cv2.imread('./feature/partialinput/sinput.jpg',0) #small
  

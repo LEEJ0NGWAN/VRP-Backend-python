@@ -129,10 +129,5 @@ dmypy.json
 .pyre/
 
 .idea/
-data/
-feature/
-images/
 opencv/
-output/
-testing/
-**/test.py
+Unity_Build/
