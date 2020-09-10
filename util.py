@@ -24,8 +24,8 @@ def getYawPitch(yaw_index, pitch_index, x, y):
     h = HEIGHT/2
 
     center = {
-        x: w,
-        y: h,
+        'x': w,
+        'y': h,
     }
 
     dist = {}
