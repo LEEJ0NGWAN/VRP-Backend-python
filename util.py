@@ -36,5 +36,5 @@ def getYawPitch(x, y, i=None, j=None):
     return (yaw_, pitch_)
 
 # example
-print(getYawPitch(970,392))
+# print(getYawPitch(970,392))
 
