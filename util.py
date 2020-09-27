@@ -33,6 +33,25 @@ def checkPage(i, j):
 
     return True
 
+def getBaseRadian(index):
+    if index not in range(PAGINATION):
+        return None
+
+    if not index:
+        return 0
+
+    half_page = PAGINATION//2
+    
+    baseRadian = None
+    if index < half_page:
+        baseRadian = quarter_pi * index
+    elif index > half_page:
+        baseRadian = quarter_pi * (index-half_page) - pi
+    else:
+        baseRadian = pi
+    
+    return baseRadian
+
 def getYawPitch(x, y, i=None, j=None):
     if not checkRange(x,y):
         return None
@@ -53,11 +72,18 @@ def getYawPitch(x, y, i=None, j=None):
         'y': y-center['y'],
     }
 
-    yaw_ = (diff['x']/w) * constX + yaw
-    pitch_ = (diff['y']/h) * constY + pitch
+    yaw_ = (diff['x']/w) * constX + getBaseRadian(i)
+    pitch_ = (diff['y']/h) * constY + getBaseRadian(j)
 
     return (yaw_, pitch_)
 
 # example
-print(getYawPitch(204,282,0,0))
+# print(getYawPitch(169,210,2,0))
+
+x = int(input("x:"))
+y = int(input("y:"))
+i = int(input("i:"))
+j = int(input("j:"))
+
+print(getYawPitch(x,y,i,j))
 
