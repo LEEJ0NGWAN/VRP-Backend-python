@@ -6,8 +6,8 @@ quarter_pi = 0.25 * pi
 PAGINATION = 8
 
 # 인풋 이미지 사이즈
-WIDTH = 1440
-HEIGHT = 720
+WIDTH = 480
+HEIGHT = 360
 
 # 이미지의 4분의 1 크기
 w = WIDTH//2
@@ -40,11 +40,11 @@ def getYawPitch(x, y, i=None, j=None):
     constX, constY = pi, half_pi
     yaw, pitch = 0, 0
 
-    if i and j:
+    if i is not None and j is not None:
         if not checkPage(i,j):
             return None
 
-        constX = constY = 0.5 * quarter_pi
+        constX = constY = quarter_pi
         yaw = quarter_pi * i
         pitch = quarter_pi * j
 
@@ -59,5 +59,5 @@ def getYawPitch(x, y, i=None, j=None):
     return (yaw_, pitch_)
 
 # example
-# print(getYawPitch(970,392))
+print(getYawPitch(204,282,0,0))
 
