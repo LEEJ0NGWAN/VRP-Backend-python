@@ -42,48 +42,56 @@ def getBaseRadian(index):
 
     half_page = PAGINATION//2
     
-    baseRadian = None
+    baseRadian = pi
     if index < half_page:
         baseRadian = quarter_pi * index
     elif index > half_page:
         baseRadian = quarter_pi * (index-half_page) - pi
-    else:
-        baseRadian = pi
     
     return baseRadian
 
-def getYawPitch(x, y, i=None, j=None):
+def getYawPitch(x, y, yaw_index=None, pitch_index=None, base=False):
     if not checkRange(x,y):
         return None
 
     constX, constY = pi, half_pi
-    yaw, pitch = 0, 0
 
-    if i is not None and j is not None:
-        if not checkPage(i,j):
+    if yaw_index is not None and pitch_index is not None:
+        if not checkPage(yaw_index, pitch_index):
             return None
 
         constX = constY = quarter_pi
-        yaw = quarter_pi * i
-        pitch = quarter_pi * j
 
-    diff = {
-        'x': x-center['x'],
-        'y': y-center['y'],
-    }
+    if base:
+        yaw_ = getBaseRadian(yaw_index)
+        pitch_ = getBaseRadian(pitch_index)
 
-    yaw_ = (diff['x']/w) * constX + getBaseRadian(i)
-    pitch_ = (diff['y']/h) * constY + getBaseRadian(j)
+    else:
+        # if pitch_index in [3,4,5,6]:
+        #     if x < w:
+        #         x = w + (w-x)
+        #     else:
+        #         x = w - (x-w)
+
+        diff = {
+            'x': x-center['x'],
+            'y': y-center['y'],
+        }
+
+        yaw_ = (diff['x']/w) * constX + getBaseRadian(yaw_index)
+        pitch_ = (diff['y']/h) * constY + getBaseRadian(pitch_index)
 
     return (yaw_, pitch_)
 
+# getYawPitch(x,y,i,j)
 # example
 # print(getYawPitch(169,210,2,0))
 
+print("/////////////////////")
+print("이제 부분 사진에서 특정 좌표를 마지파노 좌표로 변환합니다")
 x = int(input("x:"))
 y = int(input("y:"))
-i = int(input("i:"))
-j = int(input("j:"))
-
-print(getYawPitch(x,y,i,j))
+i = int(input("yaw_index:"))
+j = int(input("pitch_index:"))
+print(getYawPitch(x, y, i, j))
 
